@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --palette-darkest: #0d1321;
+  --palette-dark: #1d2d44;
+  --palette-mid: #3e5c76;
+  --palette-light: #748cab;
+  --palette-cream: #f0ebd8;
+  --foreground: #0d1321;
+  --background: #f0ebd8;
+  --surface: #ffffff;
+  --primary: #3e5c76;
+  --primary-hover: #1d2d44;
+  --accent: #748cab;
+  --border: #3e5c76;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--palette-cream);
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Readability: ensure headings and labels are bold enough */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--palette-darkest);
+}
+
+label {
+  font-weight: 600;
+  color: var(--palette-darkest);
+}
+
+/* Readable text: use darkest for primary, dark for secondary */
+.text-readable {
+  color: var(--palette-darkest);
+}
+.text-readable-muted {
+  color: var(--palette-dark);
+}
+
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-palette-mid;
+  }
+}
