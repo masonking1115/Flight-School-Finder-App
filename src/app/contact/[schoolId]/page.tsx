@@ -78,14 +78,14 @@ export default function ContactSchoolPage() {
 
   if (!school) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-palette-cream">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-palette-cream">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-white">
       <div className="w-full max-w-md">
         <Link
           href={`/school/${schoolId}`}

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStudentById, rankSchoolsForStudent } from "@/lib/store";
+import { getStudentById, rankSchoolsForStudent, rankSchoolsForStudentWithMeta } from "@/lib/store";
 import type { StudentOnboarding } from "@/lib/types";
 
 export async function GET(request: NextRequest) {
@@ -35,13 +35,34 @@ export async function POST(request: NextRequest) {
       onboarding: StudentOnboarding;
       sort?: "score" | "distance" | "price";
     };
-    if (!onboarding?.location || onboarding.radiusMiles == null || !onboarding.goals?.length)
+    const loc = onboarding?.location?.zip || onboarding?.location?.city || "";
+    if (!onboarding?.location || onboarding.radiusMiles == null)
       return NextResponse.json(
-        { error: "onboarding with location, radiusMiles, and goals required" },
+        { error: "Location and radius are required" },
         { status: 400 }
       );
-    const ranked = rankSchoolsForStudent(onboarding, sort || "score");
-    return NextResponse.json({ results: ranked });
+    if (!loc.trim())
+      return NextResponse.json(
+        { error: "Enter a ZIP code or city name" },
+        { status: 400 }
+      );
+    const goals = onboarding.goals || [];
+    const payload: StudentOnboarding = {
+      ...onboarding,
+      goals,
+      partPreference: onboarding.partPreference ?? "no_preference",
+      budgetRange: onboarding.budgetRange ?? "",
+      timeline: onboarding.timeline ?? "just_browsing",
+    };
+    const { results, matchedLocation, locationSuggestions } = rankSchoolsForStudentWithMeta(
+      payload,
+      sort || "score"
+    );
+    return NextResponse.json({
+      results,
+      ...(matchedLocation && { matchedLocation }),
+      ...(locationSuggestions && locationSuggestions.length > 0 && { locationSuggestions }),
+    });
   } catch (e) {
     return NextResponse.json(
       { error: "Something went wrong" },

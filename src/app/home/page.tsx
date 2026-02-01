@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import UserMenu from "@/components/UserMenu";
 import { useAuth } from "@/context/AuthContext";
 import {
   GOALS,
@@ -11,7 +13,10 @@ import {
   BUDGET_OPTIONS,
   TIMELINE_OPTIONS,
 } from "@/lib/types";
-import type { StudentOnboarding, PartPreference, BudgetRange, Timeline } from "@/lib/types";
+import type { StudentOnboarding, PartPreference, BudgetRange, Timeline, StudentProfile } from "@/lib/types";
+import type { SchoolProfile } from "@/lib/types";
+
+type RecommendedItem = { school: SchoolProfile; distanceMiles?: number };
 
 const defaultOnboarding: StudentOnboarding = {
   location: {},
@@ -31,6 +36,8 @@ export default function StudentHomePage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [recommendedSchools, setRecommendedSchools] = useState<RecommendedItem[]>([]);
+  const [recommendedLoading, setRecommendedLoading] = useState(true);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -45,9 +52,36 @@ export default function StudentHomePage() {
     }
   }, [user, router, isHydrated]);
 
+  const currentOnboarding =
+    (user?.type === "student" && (user.profile as StudentProfile).onboarding) || defaultOnboarding;
+
+  useEffect(() => {
+    if (!isHydrated || user?.type !== "student" || !user.profile.id) return;
+    setRecommendedLoading(true);
+    fetch("/api/recommended", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        studentId: user.profile.id,
+        onboarding: currentOnboarding,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setRecommendedSchools(data.schools ?? []))
+      .catch(() => setRecommendedSchools([]))
+      .finally(() => setRecommendedLoading(false));
+  }, [
+    isHydrated,
+    user?.type,
+    user?.profile.id,
+    currentOnboarding?.location?.zip,
+    currentOnboarding?.location?.city,
+    currentOnboarding?.radiusMiles,
+  ]);
+
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-palette-cream flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -113,19 +147,21 @@ export default function StudentHomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-palette-cream">
-      <header className="border-b border-palette-mid bg-palette-cream">
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="font-semibold text-palette-darkest">
-            Flight School Finder
+          <Link href="/home" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="My Flight School" width={100} height={40} className="h-8 w-auto object-contain" />
+            <span className="font-semibold text-palette-darkest">My Flight School</span>
           </Link>
-          <nav className="flex gap-4">
+          <nav className="flex items-center gap-4">
             <Link href="/results" className="font-semibold text-palette-darkest hover:underline text-sm">
               Results
             </Link>
             <Link href="/compare" className="font-semibold text-palette-darkest hover:underline text-sm">
               Compare
             </Link>
+            <UserMenu />
           </nav>
         </div>
       </header>
@@ -201,6 +237,52 @@ export default function StudentHomePage() {
                 </>
               )}
             </div>
+
+            <section aria-labelledby="recommended-heading" className="mt-8">
+              <h2 id="recommended-heading" className="text-lg font-bold text-palette-darkest mb-4">
+                Recommended flight schools
+              </h2>
+              {recommendedLoading ? (
+                <div className="flex justify-center py-8">
+                  <div className="h-10 w-10 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
+                </div>
+              ) : recommendedSchools.length === 0 ? (
+                <p className="text-palette-dark font-medium rounded-lg border border-palette-mid bg-white p-4">
+                  No schools to show yet. Set your preferences or browse results to see recommendations.
+                </p>
+              ) : (
+                <ul className="space-y-4" role="list">
+                  {recommendedSchools.map(({ school, distanceMiles }) => (
+                    <li
+                      key={school.id}
+                      className="rounded-lg border border-palette-mid bg-white p-4 shadow-sm"
+                    >
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-bold text-palette-darkest">
+                            {school.name}
+                          </h3>
+                          <p className="text-sm font-semibold text-palette-dark mt-1">
+                            {school.address}
+                          </p>
+                          {distanceMiles != null && (
+                            <p className="text-sm font-medium text-palette-dark mt-1">
+                              {distanceMiles.toFixed(0)} mi from your location
+                            </p>
+                          )}
+                        </div>
+                        <Link
+                          href={`/school/${school.id}`}
+                          className="rounded-lg bg-palette-mid text-palette-cream px-4 py-2 text-sm font-semibold hover:bg-palette-dark focus-ring min-h-[44px] inline-flex items-center justify-center shrink-0"
+                        >
+                          View profile
+                        </Link>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
           </section>
         )}
 

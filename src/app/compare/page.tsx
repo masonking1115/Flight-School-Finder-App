@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import UserMenu from "@/components/UserMenu";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import type { SchoolProfile } from "@/lib/types";
@@ -48,7 +49,7 @@ export default function ComparePage() {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-palette-cream flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -57,7 +58,7 @@ export default function ComparePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-palette-cream">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -65,7 +66,7 @@ export default function ComparePage() {
 
   if (schools.length < 2) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-palette-cream">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-white">
         <h1 className="text-2xl font-bold text-palette-darkest mb-4">
           Compare schools
         </h1>
@@ -83,12 +84,13 @@ export default function ComparePage() {
   }
 
   return (
-    <div className="min-h-screen bg-palette-cream">
-      <header className="border-b border-palette-mid bg-palette-cream">
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/results" className="font-semibold text-palette-darkest hover:underline">
             Back to results
           </Link>
+          <UserMenu />
         </div>
       </header>
 

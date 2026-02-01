@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import UserMenu from "@/components/UserMenu";
 import { useAuth } from "@/context/AuthContext";
 import type { SchoolProfile } from "@/lib/types";
 
@@ -51,7 +52,7 @@ export default function SchoolProfileEditorPage() {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-palette-cream flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -60,10 +61,11 @@ export default function SchoolProfileEditorPage() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-palette-mid bg-palette-cream">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/school/leads" className="font-semibold text-palette-darkest hover:underline">Back to leads</Link>
           <span className="text-sm font-semibold text-palette-dark">Step {step} of 3</span>
+          <UserMenu />
         </div>
       </header>
       <main className="max-w-2xl mx-auto px-4 py-8">

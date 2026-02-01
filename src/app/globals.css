@@ -9,7 +9,7 @@
   --palette-light: #748cab;
   --palette-cream: #f0ebd8;
   --foreground: #0d1321;
-  --background: #f0ebd8;
+  --background: #ffffff;
   --surface: #ffffff;
   --primary: #3e5c76;
   --primary-hover: #1d2d44;
@@ -19,7 +19,7 @@
 
 body {
   color: var(--foreground);
-  background: var(--palette-cream);
+  background: #ffffff;
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

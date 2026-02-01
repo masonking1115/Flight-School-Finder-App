@@ -39,7 +39,7 @@ function ConfirmationContent() {
 
 export default function ContactConfirmationPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-palette-cream">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-white">
       <Suspense fallback={<div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />}>
         <ConfirmationContent />
       </Suspense>

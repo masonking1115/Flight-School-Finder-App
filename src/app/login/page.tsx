@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
@@ -49,9 +50,10 @@ export default function StudentLoginPage() {
       <div className="w-full max-w-sm">
         <Link
           href="/"
-          className="text-palette-dark font-semibold mb-8 inline-block hover:text-palette-darkest"
+          className="flex items-center gap-2 text-palette-dark font-semibold mb-8 inline-block hover:text-palette-darkest"
         >
-          ← Flight School Finder
+          <Image src="/logo.png" alt="My Flight School" width={80} height={32} className="h-7 w-auto object-contain" />
+          <span>← My Flight School</span>
         </Link>
         <h1 className="text-2xl font-bold text-palette-darkest mb-6">
           {mode === "login" ? "Log in" : "Create account"}

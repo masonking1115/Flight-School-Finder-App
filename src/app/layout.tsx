@@ -3,7 +3,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Flight School Finder",
+  title: "My Flight School",
   description: "Find the right flight school for you.",
 };
 

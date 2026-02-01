@@ -47,7 +47,7 @@ export default function LeadDetailPage() {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-palette-cream flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -56,7 +56,7 @@ export default function LeadDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-palette-cream">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -64,7 +64,7 @@ export default function LeadDetailPage() {
 
   if (!lead) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-palette-cream">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-white">
         <p className="text-palette-darkest font-semibold mb-4">Lead not found.</p>
         <Link href="/school/leads" className="font-semibold text-palette-darkest hover:underline">
           Back to leads
@@ -76,8 +76,8 @@ export default function LeadDetailPage() {
   const contact = [lead.studentEmail, lead.studentPhone].filter(Boolean).join(" · ");
 
   return (
-    <div className="min-h-screen bg-palette-cream">
-      <header className="border-b border-palette-mid bg-palette-cream">
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/school/leads" className="font-semibold text-palette-darkest hover:underline">
             ← Back to leads

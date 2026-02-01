@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import UserMenu from "@/components/UserMenu";
 import { useAuth } from "@/context/AuthContext";
 import type { Lead } from "@/lib/types";
 
@@ -29,7 +31,7 @@ export default function SchoolLeadsPage() {
 
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-palette-cream flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -37,16 +39,18 @@ export default function SchoolLeadsPage() {
   if (user?.type !== "school") return null;
 
   return (
-    <div className="min-h-screen bg-palette-cream">
-      <header className="border-b border-palette-mid bg-palette-cream">
+    <div className="min-h-screen bg-white">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <Link href="/" className="font-bold text-palette-darkest">
-              Flight School Finder
+            <Link href="/school/profile" className="flex items-center gap-2">
+              <Image src="/logo.png" alt="My Flight School" width={100} height={40} className="h-8 w-auto object-contain" />
+              <span className="font-bold text-palette-darkest">My Flight School</span>
             </Link>
             <Link href="/school/profile" className="text-sm font-semibold text-palette-darkest hover:underline">
               Profile
             </Link>
+            <UserMenu />
           </div>
         </div>
       </header>

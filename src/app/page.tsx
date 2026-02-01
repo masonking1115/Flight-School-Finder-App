@@ -1,13 +1,24 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-palette-cream">
-      <header className="border-b border-palette-mid bg-palette-cream">
+    <div className="min-h-screen flex flex-col bg-white">
+      <header className="border-b border-palette-mid bg-white">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <span className="font-bold text-palette-darkest text-lg">
-            Flight School Finder
-          </span>
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="My Flight School"
+              width={120}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
+            <span className="font-bold text-palette-darkest text-lg sr-only sm:not-sr-only">
+              My Flight School
+            </span>
+          </Link>
           <nav className="flex gap-4">
             <Link
               href="/login"
@@ -93,7 +104,7 @@ export default function LandingPage() {
         </p>
       </main>
 
-      <footer className="border-t border-palette-mid py-6 bg-palette-cream">
+      <footer className="border-t border-palette-mid py-6 bg-white">
         <div className="max-w-4xl mx-auto px-4 flex justify-center gap-6 text-sm font-semibold text-palette-darkest">
           <Link href="/login" className="text-palette-darkest hover:underline">
             Login

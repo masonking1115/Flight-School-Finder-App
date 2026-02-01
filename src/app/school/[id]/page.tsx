@@ -34,7 +34,7 @@ export default function SchoolProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-palette-cream">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="h-12 w-12 rounded-full border-2 border-palette-mid border-t-transparent animate-spin" />
       </div>
     );
@@ -42,7 +42,7 @@ export default function SchoolProfilePage() {
 
   if (!school) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-palette-cream">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-white">
         <p className="text-palette-darkest font-semibold mb-4">School not found.</p>
         <Link href="/results" className="font-semibold text-palette-darkest hover:underline">
           Back to results
