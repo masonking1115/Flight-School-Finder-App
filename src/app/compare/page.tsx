@@ -74,10 +74,10 @@ export default function ComparePage() {
           Add at least 2 schools from your results to compare.
         </p>
         <Link
-          href="/results"
+          href="/home?tab=schools"
           className="rounded-lg bg-palette-mid text-palette-cream px-6 py-3 font-semibold hover:bg-palette-dark focus-ring min-h-[44px] inline-flex items-center justify-center"
         >
-          Go to results
+          Go to Schools
         </Link>
       </div>
     );
@@ -87,17 +87,30 @@ export default function ComparePage() {
     <div className="min-h-screen bg-white">
       <header className="border-b border-palette-mid bg-white">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/results" className="font-semibold text-palette-darkest hover:underline">
-            Back to results
+          <Link href="/home?tab=schools" className="font-semibold text-palette-darkest hover:underline">
+            Back to Schools
           </Link>
           <UserMenu />
         </div>
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-8 overflow-x-auto">
-        <h1 className="text-2xl font-bold text-palette-darkest mb-6">
-          Compare schools
-        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 className="text-2xl font-bold text-palette-darkest">
+            Compare schools
+          </h1>
+          <button
+            type="button"
+            onClick={() => {
+              setCompareIds([]);
+              setSchools([]);
+              if (typeof window !== "undefined") localStorage.removeItem("fsf_compare");
+            }}
+            className="rounded-lg border border-palette-mid text-palette-darkest px-4 py-2 text-sm font-semibold hover:bg-palette-100 focus-ring min-h-[44px]"
+          >
+            Clear compare
+          </button>
+        </div>
 
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">

@@ -4,6 +4,18 @@ Summary of changes made to My Flight School (formerly Flight School Finder).
 
 ---
 
+## Tabs: Home, Schools, Study Guide, Blogs (new version)
+
+- Replaced **Results** and **Compare** nav links with four tabs: **Home**, **Schools**, **Study Guide**, **Blogs**.
+- **Home tab (Dashboard):** Search bar for finding flight schools (runs search and switches to Schools tab), user profile overview (email, location, radius, goals, part preference + link to Update preferences), and recommended flight schools as before.
+- **Schools tab:** Advanced search (ZIP/city, radius, goals, Part 61/141, budget, timeline), Update preferences link, sort (Best match / Closest / Price), school list with Add to compare and View profile; Compare button in header when schools are in compare.
+- **Study Guide tab:** Basic notetaking in a textarea; notes saved automatically in browser (`localStorage` per user).
+- **Blogs tab:** Sample blog post “Welcome to My Flight School” (placeholder for future posts).
+- **/results** now redirects to **/home?tab=schools**. Compare page “Back” and empty-state link go to **/home?tab=schools**.
+- **Clear compare:** Option to clear the compare list is inside the Compare page content (button next to “Compare schools” title); clears list and `localStorage`.
+
+---
+
 ## Branding & naming
 
 - Renamed the app from **"Flight School Finder"** to **"My Flight School"** everywhere (browser title, headers, login back links).
